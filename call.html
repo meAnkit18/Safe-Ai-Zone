@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearest Person Call Feature</title>
+    <link rel="icon" type="image/jpg" href="https://i.pinimg.com/originals/54/96/c3/5496c328d02c848b352190a0eee94dc1.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(47, 45, 45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #cf245f;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .button {
+            background-color: #cf245f;
+            background-image: linear-gradient(to bottom right, #fcd34d, #ef4444, #ec4899);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ec4899;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Nearest Person Call</h1>
+        <p>Click the button below to call the nearest person based on your current location for assistance.</p>
+        <button class="button" onclick="callNearestPerson()">Call Nearest Person</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function callNearestPerson() {
+            if (navigator.geolocation) {
+                // Get the current location
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // For simulation purposes, assume these are the nearest people and their coordinates
+                    const people = [
+                        { name: "John", lat: 40.748817, lon: -73.985428 }, // Nearer person
+                        { name: "Sarah", lat: 40.740817, lon: -73.990428 }, // Further person
+                    ];
+
+                    // Find nearest person
+                    let nearestPerson = findNearestPerson(latitude, longitude, people);
+
+                    // Display the nearest person and simulate the call
+                    if (nearestPerson) {
+                        document.getElementById("output").innerHTML = `Calling ${nearestPerson.name} at ${nearestPerson.lat}, ${nearestPerson.lon}...`;
+                    } else {
+                        document.getElementById("output").innerHTML = "No person found nearby.";
+                    }
+                }, (error) => {
+                    document.getElementById("output").innerHTML = "Error: " + error.message;
+                });
+            } else {
+                document.getElementById("output").innerHTML = "Geolocation is not supported by your browser.";
+            }
+        }
+
+        function findNearestPerson(userLat, userLon, people) {
+            let minDistance = Infinity;
+            let nearestPerson = null;
+
+            people.forEach(person => {
+                // Calculate the distance between the user and each person (using Haversine formula)
+                let distance = calculateDistance(userLat, userLon, person.lat, person.lon);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestPerson = person;
+                }
+            });
+
+            return nearestPerson;
+        }
+
+        // Haversine formula to calculate distance between two points in km
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the Earth in km
+            const dLat = degreesToRadians(lat2 - lat1);
+            const dLon = degreesToRadians(lon2 - lon1);
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance in km
+            return distance;
+        }
+
+        function degreesToRadians(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+    </script>
+
+</body>
+</html>

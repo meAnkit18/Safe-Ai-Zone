@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Detection</title>
+    <link rel="icon" type="image/jpg" href="https://i.pinimg.com/originals/54/96/c3/5496c328d02c848b352190a0eee94dc1.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(47, 45, 45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #cf245f;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .button {
+            background-color: #cf245f;
+            background-image: linear-gradient(to bottom right, #fcd34d, #ef4444, #ec4899);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ec4899;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Camera Detection Feature</h1>
+        <p>Click the button below to turn on the camera and detect surroundings.</p>
+
+        <!-- Camera Button -->
+        <button class="button" onclick="startCamera()">Start Camera</button>
+
+        <!-- Display video from camera -->
+        <video id="video" autoplay></video>
+
+        <!-- Display output of detection -->
+        <div id="output"></div>
+
+        <!-- Canvas for capturing images -->
+        <canvas id="canvas"></canvas>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        let videoElement = document.getElementById("video");
+        let canvasElement = document.getElementById("canvas");
+        let context = canvasElement.getContext("2d");
+
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Access the camera
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Display the video stream
+                        videoElement.srcObject = stream;
+                    })
+                    .catch(function(error) {
+                        // Handle error
+                        console.log("Error accessing camera: ", error);
+                        document.getElementById("status").innerText = "Error accessing camera.";
+                    });
+            } else {
+                document.getElementById("status").innerText = "Camera not supported on this browser.";
+            }
+        }
+
+        // Capture image function
+        function captureImage() {
+            // Set the canvas size to match the video size
+            canvasElement.width = videoElement.videoWidth;
+            canvasElement.height = videoElement.videoHeight;
+
+            // Draw the current video frame onto the canvas
+            context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+            // Convert canvas to image data (Base64)
+            let imageData = canvasElement.toDataURL("image/png");
+
+            // Display captured image
+            let output = document.getElementById("output");
+            output.innerHTML = `<p>Image Captured:</p><img src="${imageData}" width="200" />`;
+
+            // In a real-world scenario, here you would send the image data to an AI model or API to analyze and detect anomalies.
+            document.getElementById("status").innerText = "Analyzing image..."; 
+
+            // Example: Send the image data to an API for analysis
+            // Example API call
+            // fetch('/analyze-image', { method: 'POST', body: imageData });
+
+            setTimeout(() => {
+                document.getElementById("status").innerText = "Analysis complete. No anomalies detected.";
+            }, 2000);
+        }
+
+        // Add button for capturing image
+        // setInterval(() => {
+        //     let captureButton = document.createElement("button");
+        //     captureButton.textContent = "Capture Image";
+        //     captureButton.classList.add("button");
+        //     captureButton.onclick = captureImage;
+        //     document.body.appendChild(captureButton);
+        // }, 1000); // Creates the capture button dynamically after 1 second
+    </script>
+
+</body>
+</html>

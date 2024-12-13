@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Emergency Alert</title>
+    <link rel="icon" type="image/jpg" href="https://i.pinimg.com/originals/54/96/c3/5496c328d02c848b352190a0eee94dc1.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(47, 45, 45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #cf245f;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .button {
+            background-color: #cf245f;
+            background-image: linear-gradient(to bottom right, #fcd34d, #ef4444, #ec4899);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ec4899;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SOS Emergency Alert</h1>
+        <p>Click the button below to trigger an SOS alert and send your location to the nearest emergency contacts.</p>
+
+        <!-- SOS Button -->
+        <button class="button" onclick="sendSOS()">Send SOS</button>
+
+        <!-- Display output -->
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function sendSOS() {
+            if (navigator.geolocation) {
+                // Get the current location
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const location = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                    
+                    // Simulate sending SOS message
+                    const message = `SOS! Emergency alert from ${latitude}, ${longitude}. Please help!`;
+
+                    // Display location and simulated SOS message
+                    document.getElementById("output").innerHTML = `
+                        <p>Your current location: ${location}</p>
+                        <p>Sending SOS alert to nearest emergency contacts...</p>
+                        <p><strong>Message Sent:</strong> "${message}"</p>
+                    `;
+                    
+                    // Here, you would integrate actual messaging or emergency services APIs
+                    // Example: You can use Twilio or a similar API to send the SOS message
+
+                }, (error) => {
+                    document.getElementById("output").innerHTML = "Error: " + error.message;
+                });
+            } else {
+                document.getElementById("output").innerHTML = "Geolocation is not supported by your browser.";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(47, 45, 45);
+}
+.navv{
+    width: 70%;
+    height: 4rem;
+    background-color: red;
+    margin-top: 1%;
+    margin-left: 15%;
+    border-radius: 10px;
+    color: white;
+    font-size: xx-large;
+    
+}
+.main{
+    /* margin-left: 250px;
+    margin-top: 10px; */
+    
+}
+
+/* .bodi{
+    width: 100rem;
+    height: 100px;
+    background-color: antiquewhite;
+} */
+
+button{
+    height: 150px;
+    width: 150px;
+    margin-left: 22px;
+    margin-top: 10px;
+    border-radius: 10px;
+    
+    border-color: rgb(134 239 172);
+}
+.longb{
+    /* height: 100px;
+    width: 325px;
+    color: white;
+    font-size: x-large;
+    font-family:Georgia, 'Times New Roman', Times, serif; */
+    
+
+}
+.one{
+    background-image: url("/img/Locationlogo.png");
+    background-size: cover;
+    background-position: center;
+    
+}
+#call{
+    background-image: url("/img/call_logo.png");
+    background-size: cover;
+    background-position: center;
+}
+#massage{
+    background-image: url("/img/Massegelogo.png");
+    background-size: cover;
+    background-position: center;
+}
+#cam{
+    background-image: url("/img/CamraLogo.png");
+    background-size: cover;
+    background-position: center;
+}
+#sos{
+    background-image: url("/img/sos.png");
+    background-size: cover;
+    background-position: center;
+}
+#med{
+    background-image: url("/img/Medical-removebg-preview.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 100000px;
+  }
+  a{
+    color: white;
+  }
+
+  .mar{
+    margin-top: 15px;
+  }
+/* ................... */
+
