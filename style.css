@@ -45,33 +45,33 @@ button{
 
 }
 .one{
-    background-image: url("/img/Locationlogo.png");
+    background-image: url("Locationlogo.png");
     background-size: cover;
     background-position: center;
     
 }
 #call{
-    background-image: url("/img/call_logo.png");
+    background-image: url("call_logo.png");
     background-size: cover;
     background-position: center;
 }
 #massage{
-    background-image: url("/img/Massegelogo.png");
+    background-image: url("Massegelogo.png");
     background-size: cover;
     background-position: center;
 }
 #cam{
-    background-image: url("/img/CamraLogo.png");
+    background-image: url("CamraLogo.png");
     background-size: cover;
     background-position: center;
 }
 #sos{
-    background-image: url("/img/sos.png");
+    background-image: url("sos.png");
     background-size: cover;
     background-position: center;
 }
 #med{
-    background-image: url("/img/Medical-removebg-preview.png");
+    background-image: url("Medical-removebg-preview.png");
     background-size: cover;
     background-position: center;
 }
